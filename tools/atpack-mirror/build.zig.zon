@@ -1,0 +1,17 @@
+.{
+    .name = .atpack_mirror,
+    .version = "0.1.0",
+    .fingerprint = 0xeccde054b347ba4e,
+    .minimum_zig_version = "0.14.0",
+    .dependencies = .{
+        .httpz = .{
+            .url = "git+https://github.com/karlseguin/http.zig?ref=master#9434eaa607f855da77b80387b0be7f7cf2aaaa63",
+            .hash = "httpz-0.0.0-PNVzrFy3BgC7H3cLoiB1odzkl37NJdPx-OHG6eRXeQLX",
+        },
+    },
+    .paths = .{
+        "build.zig",
+        "build.zig.zon",
+        "src",
+    },
+}
