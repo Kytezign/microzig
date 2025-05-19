@@ -538,7 +538,7 @@ pub const I2C = enum(u1) {
                 return Error.Timeout;
             }
 
-            microzig.hal.yield();
+            microzig.scheduler.yield();
         }
 
         // Verify all commands were executed

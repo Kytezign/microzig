@@ -18,10 +18,6 @@ comptime {
     _ = @import("hal/atomic.zig");
 }
 
-pub const HAL_Options = struct {
-    yield_fn: *const fn () void = default_yield,
-};
-
 /// Clock config applied by the default `init()` function of the hal.
 pub const clock_config: clocks.Config = .default;
 
@@ -67,6 +63,3 @@ fn disable_watchdogs() void {
     RTC_CNTL.SWD_CONF.modify(.{ .SWD_DISABLE = 1 });
     RTC_CNTL.SWD_WPROTECT.raw = 0;
 }
-
-fn default_yield() void {}
-pub const yield = root.microzig_options.hal.yield_fn;

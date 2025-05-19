@@ -5,16 +5,14 @@ const app = @import("app");
 // Use microzig panic handler if not defined by an application
 pub const panic = if (!@hasDecl(app, "panic")) microzig.panic else app.panic;
 
-pub const microzig_options: microzig.Options = if (@hasDecl(app, "microzig_options")) app.microzig_options else .{};
-
 // Conditionally provide a default no-op logFn if app does not have one
 // defined. Parts of microzig use the stdlib logging facility and
 // compilations will now fail on freestanding systems that use it but do
 // not explicitly set `root.std_options.logFn`
 pub const std_options = std.Options{
-    .log_level = microzig_options.log_level,
-    .log_scope_levels = microzig_options.log_scope_levels,
-    .logFn = microzig_options.logFn,
+    .log_level = microzig.options.log_level,
+    .log_scope_levels = microzig.options.log_scope_levels,
+    .logFn = microzig.options.logFn,
 };
 
 // Startup logic:

@@ -34,6 +34,7 @@ pub const mmio = @import("mmio.zig");
 pub const interrupt = @import("interrupt.zig");
 pub const core = @import("core.zig");
 pub const concurrency = @import("concurrency.zig");
+pub const scheduler = @import("scheduler.zig");
 pub const utilities = @import("utilities.zig");
 
 /// The microzig default panic handler. Will disable interrupts and loop endlessly.
@@ -87,10 +88,15 @@ pub const Options = struct {
             _ = args;
         }
     }.log,
+
     interrupts: InterruptOptions = .{},
     cpu: CPU_Options = .{},
     hal: HAL_Options = .{},
+
+    scheduler: scheduler.Options = .{},
 };
+
+pub const options: Options = if (@hasDecl(app, "microzig_options")) app.microzig_options else .{};
 
 /// Hangs the processor and will stop doing anything useful. Use with caution!
 pub fn hang() noreturn {

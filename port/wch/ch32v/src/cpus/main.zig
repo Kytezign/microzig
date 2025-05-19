@@ -1,6 +1,4 @@
 const std = @import("std");
-const root = @import("root");
-const microzig_options = root.microzig_options;
 const microzig = @import("microzig");
 
 const riscv32_common = @import("riscv32-common");
@@ -71,7 +69,7 @@ pub const interrupt = struct {
     pub inline fn enable(irq: Interrupt) void {
         comptime {
             const irq_name = @tagName(irq);
-            if (@field(root.microzig_options.interrupts, irq_name) == null) {
+            if (@field(microzig.options.interrupts, irq_name) == null) {
                 @compileError(
                     irq_name ++ " interrupt handler should be defined.\n" ++
                         "Add to your main file:\n" ++

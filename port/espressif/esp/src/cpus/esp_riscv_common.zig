@@ -1,7 +1,5 @@
 const std = @import("std");
 const microzig = @import("microzig");
-const root = @import("root");
-const microzig_options = root.microzig_options;
 
 const riscv32_common = @import("riscv32-common");
 
@@ -295,13 +293,13 @@ fn _vector_table() align(256) linksection(".trap") callconv(.naked) void {
     comptime {
         // TODO: make a better default exception handler
         @export(
-            microzig_options.interrupts.Exception orelse &unhandled,
+            microzig.options.interrupts.Exception orelse &unhandled,
             .{ .name = "_exception_handler" },
         );
 
         for (std.meta.fieldNames(Interrupt)) |field_name| {
             @export(
-                @field(microzig_options.interrupts, field_name) orelse &unhandled,
+                @field(microzig.options.interrupts, field_name) orelse &unhandled,
                 .{ .name = std.fmt.comptimePrint("_{s}_handler", .{field_name}) },
             );
         }

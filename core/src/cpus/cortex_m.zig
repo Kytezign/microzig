@@ -1,6 +1,4 @@
 const std = @import("std");
-const root = @import("root");
-const microzig_options = root.microzig_options;
 const microzig = @import("microzig");
 const mmio = microzig.mmio;
 const app = microzig.app;
@@ -514,11 +512,11 @@ pub const interrupt = struct {
     }
 
     pub inline fn has_ram_vectors() bool {
-        return @hasField(@TypeOf(microzig_options.cpu), "ram_vectors") and microzig_options.cpu.ram_vectors;
+        return @hasField(@TypeOf(microzig.options.cpu), "ram_vectors") and microzig.options.cpu.ram_vectors;
     }
 
     pub inline fn has_ram_vectors_section() bool {
-        return @hasField(@TypeOf(microzig_options.cpu), "has_ram_vectors_section") and microzig_options.cpu.has_ram_vectors_section;
+        return @hasField(@TypeOf(microzig.options.cpu), "has_ram_vectors_section") and microzig.options.cpu.has_ram_vectors_section;
     }
 
     pub fn set_handler(int: ExternalInterrupt, handler: ?Handler) ?Handler {
