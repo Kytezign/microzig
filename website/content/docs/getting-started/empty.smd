@@ -1,0 +1,49 @@
+---
+.title = "Minimal Getting Started",
+.date = @date("2024-11-02T00:00:00"),
+.author = "Matthew Knight",
+.draft = false,
+.layout = "getting-started-empty.shtml",
+.description = "MicroZig: Minimal Getting Started",
+.tags = []
+---
+
+If we don't have a getting started example specific to your hardware, this page
+shows you how to set up your project to produce a minimal application for
+hardware that we have defined. As you will see, it comes with comments to
+explain how you can customize it to your will.
+
+The first step is to select your hardware, we have a concept for a target being
+a "board" or a "chip". A board is the device or PCB an MCU is part of, and a
+chip is the SoC, for example, Raspi Pi Pico vs. RP2040 respectively. The only
+difference in MicroZig is that there will be some extra code for a board that
+defines what the pins are connected to, the board layer may also import drivers
+for external devices.
+
+If you cannot find your hardware, then it's not defined yet. If you're in no
+rush and want us to implement the support you can make a comment on [this
+issue](https://github.com/ZigEmbeddedGroup/microzig/issues/92) to let us know
+that you want hardware in the project.
+
+The benefit of contributing your hardware support is that it will be maintained
+and improved by other people, lightening your own workload.
+
+There are differing levels of support in MicroZig, the general procedure for
+support is:
+
+- Define hardware
+- Find register schema
+- Write HAL
+- Manually test
+- Simulate
+- HIL
+
+```zig
+const std = @import("std");
+
+pub fn build(b: *std.Build) void {}
+```
+
+```zig
+pub fn main() !void {}
+```

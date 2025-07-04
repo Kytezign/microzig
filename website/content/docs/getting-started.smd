@@ -10,6 +10,10 @@
 
 # Getting Started
 
+## Empty
+
+[here]($link.page('docs/getting-started/empty'))
+
 ## Blinky on the Raspberry Pi Pico
 
 This tutorial assumes that you're programming a [Raspberry Pi

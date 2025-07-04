@@ -1,0 +1,11 @@
+<extend template="base.shtml">
+<title id="title" var="$page.title"></title>
+<div
+  id="main"
+>
+  <div :html="$page.content()">
+  </div>
+  <script>
+  </script>
+  <a href="$build.asset('data.json').link()">DATA</a>
+</div>
