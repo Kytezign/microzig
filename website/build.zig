@@ -97,18 +97,20 @@ pub fn build(b: *std.Build) !void {
 
     const json_file = generate_json_file(b, "data.json", chips.items, boards.items);
 
-    b.getInstallStep().dependOn(&zine.website(b, .{
+    const zine_options = zine.Options{
         .build_assets = &.{
             .{
                 .name = "data.json",
                 .lp = json_file,
-                .install_path = "static/data.json",
+                .install_path = "data.json",
                 .install_always = true,
             },
         },
-    }).step);
+    };
+
+    b.getInstallStep().dependOn(&zine.website(b, zine_options).step);
 
     const serve = b.step("serve", "Start the Zine dev server");
-    const run_zine = zine.serve(b, .{});
+    const run_zine = zine.serve(b, zine_options);
     serve.dependOn(&run_zine.step);
 }
