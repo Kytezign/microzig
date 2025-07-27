@@ -556,12 +556,12 @@ pub fn PioImpl(EnumType: type, chip: Chip) type {
                 .pin_mappings = options.pin_mappings,
                 .exec = .{
                     .wrap = if (program.wrap) |wrap|
-                        wrap
+                        offset + wrap
                     else
                         offset + @as(u5, @intCast(program.instructions.len)),
 
                     .wrap_target = if (program.wrap_target) |wrap_target|
-                        wrap_target
+                        offset + wrap_target
                     else
                         offset,
 

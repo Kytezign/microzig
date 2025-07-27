@@ -466,6 +466,8 @@ pub fn Encoder(comptime chip: Chip, comptime options: Options) type {
                 .jmp => .jmpslot,
                 else => .none,
             }) catch unreachable;
+
+            std.debug.assert(program.instructions.len == program.relocations.len);
         }
 
         fn calc_delay_side_set(
