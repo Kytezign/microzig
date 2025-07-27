@@ -163,8 +163,16 @@ pub fn PioImpl(EnumType: type, chip: Chip) type {
                 return error.NoSpace;
 
             const instruction_memory = self.get_instruction_memory();
-            for (program.instructions, offset..) |insn, i|
-                instruction_memory[i] = insn;
+            for (program.instructions, program.relocations, offset..) |insn, reloc, i|
+                instruction_memory[i] = switch (reloc) {
+                    .none => insn,
+                    .jmpslot => blk: {
+                        const Jmp = packed struct(u16) { address: u5, reset: u11 };
+                        var jmp: Jmp = @bitCast(insn);
+                        jmp.address += offset;
+                        break :blk @as(u16, @bitCast(jmp));
+                    },
+                };
 
             const program_mask = program.get_mask();
             UsedInstructionSpace(chip).val[@intFromEnum(self)] |= program_mask << offset;
