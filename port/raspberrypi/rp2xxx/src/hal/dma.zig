@@ -113,6 +113,8 @@ pub const Channel = enum(u4) {
         write_increment: bool,
         dreq: Dreq,
 
+        chain_to: ?Channel = null,
+
         // TODO:
         // chain to
         // ring
@@ -130,6 +132,7 @@ pub const Channel = enum(u4) {
         regs.read_addr = read_addr;
         regs.write_addr = write_addr;
         regs.trans_count = count;
+        const chain_to = config.chain_to orelse chan;
         if (config.trigger) {
             regs.ctrl_trig.modify(.{
                 .EN = @intFromBool(config.enable),
@@ -137,6 +140,7 @@ pub const Channel = enum(u4) {
                 .INCR_READ = @intFromBool(config.read_increment),
                 .INCR_WRITE = @intFromBool(config.write_increment),
                 .TREQ_SEL = config.dreq,
+                .CHAIN_TO = @intFromEnum(chain_to),
             });
         } else {
             regs.al1_ctrl.modify(.{
@@ -145,6 +149,7 @@ pub const Channel = enum(u4) {
                 .INCR_READ = @intFromBool(config.read_increment),
                 .INCR_WRITE = @intFromBool(config.write_increment),
                 .TREQ_SEL = config.dreq,
+                .CHAIN_TO = @intFromEnum(chain_to),
             });
         }
     }
