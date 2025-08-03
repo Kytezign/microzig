@@ -115,6 +115,8 @@ pub const Channel = enum(u4) {
 
         chain_to: ?Channel = null,
 
+        high_priority: bool = false,
+
         // TODO:
         // chain to
         // ring
@@ -141,6 +143,7 @@ pub const Channel = enum(u4) {
                 .INCR_WRITE = @intFromBool(config.write_increment),
                 .TREQ_SEL = config.dreq,
                 .CHAIN_TO = @intFromEnum(chain_to),
+                .HIGH_PRIORITY = @intFromBool(config.high_priority),
             });
         } else {
             regs.al1_ctrl.modify(.{
@@ -150,6 +153,7 @@ pub const Channel = enum(u4) {
                 .INCR_WRITE = @intFromBool(config.write_increment),
                 .TREQ_SEL = config.dreq,
                 .CHAIN_TO = @intFromEnum(chain_to),
+                .HIGH_PRIORITY = @intFromBool(config.high_priority),
             });
         }
     }
@@ -342,9 +346,24 @@ pub const Channel = enum(u4) {
         }
     }
 
+    pub fn set_irq1_enabled(chan: Channel, enabled: bool) void {
+        if (enabled) {
+            const inte1_set = hw.set_alias_raw(&DMA.INTE1);
+            inte1_set.* = @as(u32, 1) << @intFromEnum(chan);
+        } else {
+            const inte1_clear = hw.clear_alias_raw(&DMA.INTE1);
+            inte1_clear.* = @as(u32, 1) << @intFromEnum(chan);
+        }
+    }
+
     pub fn acknowledge_irq0(chan: Channel) void {
         const ints0_set = hw.set_alias_raw(&DMA.INTS0);
         ints0_set.* = @as(u32, 1) << @intFromEnum(chan);
+    }
+
+    pub fn acknowledge_irq1(chan: Channel) void {
+        const ints1_set = hw.set_alias_raw(&DMA.INTS1);
+        ints1_set.* = @as(u32, 1) << @intFromEnum(chan);
     }
 
     pub fn is_busy(chan: Channel) bool {
