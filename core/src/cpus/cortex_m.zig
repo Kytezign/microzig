@@ -416,7 +416,7 @@ pub const interrupt = struct {
             .cortex_m0,
             .cortex_m0plus,
             => {
-                nvic.ISER |= 1 << num;
+                nvic.ISER = 1 << num;
             },
             .cortex_m3,
             .cortex_m33,
@@ -426,7 +426,7 @@ pub const interrupt = struct {
             => {
                 const bank = num / 32;
                 const index = num % 32;
-                nvic.ISER[bank] |= 1 << index;
+                nvic.ISER[bank] = 1 << index;
             },
         }
     }
@@ -437,7 +437,7 @@ pub const interrupt = struct {
             .cortex_m0,
             .cortex_m0plus,
             => {
-                nvic.ICER |= 1 << num;
+                nvic.ICER = 1 << num;
             },
             .cortex_m3,
             .cortex_m33,
@@ -447,7 +447,7 @@ pub const interrupt = struct {
             => {
                 const bank = num / 32;
                 const index = num % 32;
-                nvic.ICER[bank] |= 1 << index;
+                nvic.ICER[bank] = 1 << index;
             },
         }
     }
@@ -479,7 +479,7 @@ pub const interrupt = struct {
             .cortex_m0,
             .cortex_m0plus,
             => {
-                nvic.ISPR |= 1 << num;
+                nvic.ISPR = 1 << num;
             },
             .cortex_m3,
             .cortex_m33,
@@ -489,7 +489,7 @@ pub const interrupt = struct {
             => {
                 const bank = num / 32;
                 const index = num % 32;
-                nvic.ISPR[bank] |= 1 << index;
+                nvic.ISPR[bank] = 1 << index;
             },
         }
     }
